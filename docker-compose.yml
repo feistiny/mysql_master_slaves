@@ -1,0 +1,70 @@
+version: "3.8"
+
+services:
+  ms_master_10_3:
+    image: ${MYSQL_MASTER_IMAGE}
+    container_name: ${CONTAINER_MASTER1}
+#    restart: unless-stopped
+    tty: true
+    ports:
+      - "3333:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - ./master1/data:/usr/local/mysql
+      - ./master1/etc:/etc/mysql
+    networks:
+      ms_network:
+        ipv4_address: ${MASTER1_IP}
+  ms_master_10_4:
+    image: ${MYSQL_MASTER_IMAGE}
+    container_name: ${CONTAINER_MASTER2}
+#    restart: unless-stopped
+    tty: true
+    ports:
+      - "3334:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - ./master2/data:/usr/local/mysql
+      - ./master2/etc:/etc/mysql
+    networks:
+      ms_network:
+        ipv4_address: ${MASTER2_IP}
+  ms_slave_10_5:
+    image: ${MYSQL_SLAVE_IMAGE}
+    container_name: ${CONTAINER_SLAVE1}
+#    restart: unless-stopped
+    tty: true
+    ports:
+      - "3335:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - ./slave1/data:/usr/local/mysql
+      - ./slave1/etc:/etc/mysql
+    networks:
+      ms_network:
+        ipv4_address: ${SLAVE1_IP}
+  ms_slave_10_6:
+    image: ${MYSQL_SLAVE_IMAGE}
+    container_name: ${CONTAINER_SLAVE2}
+#    restart: unless-stopped
+    tty: true
+    ports:
+      - "3336:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - ./slave2/data:/usr/local/mysql
+      - ./slave2/etc:/etc/mysql
+    networks:
+      ms_network:
+        ipv4_address: ${SLAVE2_IP}
+
+networks:
+  ms_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: ${SUB_NET}

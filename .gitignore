@@ -1,0 +1,7 @@
+master1/data
+master2/data
+slave1/data
+slave2/data
+.env
+log-pos.txt
+mysql-bin.txt

@@ -1,0 +1,15 @@
+[mysqld]
+server-id=4
+
+# binlog
+binlog_format=mixed
+log-bin=/usr/local/mysql/mysql-bin
+
+#read_only=1 # 普通用户只读
+#super_read_only=1 # root 只读
+
+# relay log 中的 sql 也记录到 binlog 中, 用于: 从库当主库, 多级从库
+log_slave_updates=1
+
+auto_increment_offset=2 # 自增起始值
+auto_increment_increment=2 # 自增步长
